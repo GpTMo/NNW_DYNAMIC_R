@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22 fill=%22%23C6905D%22>nl</text></svg>">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="An elegant and highly interactive web presentation for NL.WIGS, a custom wig boutique. Features a dynamic interface, service showcases, and a virtual try-on experience using the device camera." />
+    <meta name="keywords" content="NL.WIGS, custom wigs, wig boutique, virtual try-on, luxury wigs, hair fashion, custom creations" />
+    <meta name="author" content="NL.WIGS" />
+    <title>NL.WIGS - Custom Wig Creations</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+      body {
+        font-family: 'Montserrat', sans-serif;
+        background-color: #000000;
+        color: #F5EBE0;
+        cursor: default;
+      }
+      .font-heading {
+        font-family: 'Cormorant Garamond', serif;
+      }
+      .font-script {
+        font-family: 'Cormorant Garamond', serif;
+      }
+      /* Custom scrollbar for a more premium feel */
+      ::-webkit-scrollbar {
+        width: 8px;
+      }
+      ::-webkit-scrollbar-track {
+        background: #1a1a1a;
+      }
+      ::-webkit-scrollbar-thumb {
+        background-color: #C6905D;
+        border-radius: 10px;
+        border: 2px solid #1a1a1a;
+      }
+
+      /* Accessibility Focus */
+      :focus-visible {
+        outline: 2px solid #C6905D;
+        outline-offset: 2px;
+        border-radius: 2px;
+      }
+
+      /* Lazy Loading Image Placeholder */
+      img[loading="lazy"] {
+        background-color: #1a1a1a;
+        transition: opacity 0.5s ease-in-out;
+        opacity: 0;
+      }
+      img.lazy-loaded {
+        opacity: 1;
+      }
+
+      @keyframes fadeIn {
+        from { opacity: 0; transform: scale(0.95); }
+        to { opacity: 1; transform: scale(1); }
+      }
+      .animate-fade-in {
+        animation: fadeIn 0.4s ease-out forwards;
+      }
+       /* Animation for floating gallery images */
+      @keyframes float {
+        0% { transform: translate(0px, 0px) rotate(0deg); }
+        20% { transform: translate(10px, -15px) rotate(-2deg); }
+        40% { transform: translate(-5px, 10px) rotate(1deg); }
+        60% { transform: translate(15px, 5px) rotate(2deg); }
+        80% { transform: translate(5px, -10px) rotate(-1deg); }
+        100% { transform: translate(0px, 0px) rotate(0deg); }
+      }
+      /* Animation for section reveal */
+      @keyframes reveal {
+        from { opacity: 0; transform: translateY(30px); }
+        to { opacity: 1; transform: translateY(0); }
+      }
+      .animate-reveal {
+        animation: reveal 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+      }
+      
+      /* Staggered Card Animation */
+      @keyframes reveal-card {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
+      }
+      .animate-reveal-card {
+        animation: reveal-card 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94) backwards;
+      }
+
+      /* Mobile Menu Link Animation */
+      @keyframes fadeInUp {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      /* Creation Process Timeline Animations */
+      @keyframes slideInLeft {
+        from { opacity: 0; transform: translateX(-30px); }
+        to { opacity: 1; transform: translateX(0); }
+      }
+      @keyframes slideInRight {
+        from { opacity: 0; transform: translateX(30px); }
+        to { opacity: 1; transform: translateX(0); }
+      }
+      .animate-slide-in-left { animation: slideInLeft 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94) backwards; }
+      .animate-slide-in-right { animation: slideInRight 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94) backwards; }
+
+
+      /* Enhanced Hero Animations */
+      @keyframes hero-logo-entrance {
+        from {
+          opacity: 0;
+          transform: translateY(40px) scale(0.8);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0) scale(1);
+        }
+      }
+      
+      @keyframes hero-text-entrance {
+         from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .animate-hero-logo {
+        animation: hero-logo-entrance 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.2s backwards;
+      }
+      .animate-hero-p {
+        animation: hero-text-entrance 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.5s backwards;
+      }
+      .animate-hero-button {
+        animation: hero-text-entrance 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.7s backwards;
+      }
+    </style>
+  <script type="importmap">
+{
+  "imports": {
+    "react/": "https://aistudiocdn.com/react@^19.1.1/",
+    "react": "https://aistudiocdn.com/react@^19.1.1",
+    "react-dom/": "https://aistudiocdn.com/react-dom@^19.1.1/"
+  }
+}
+</script>
+<script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "BeautySalon",
+          "name": "NL.WIGS",
+          "description": "Boutique de création de perruques sur mesure, offrant des services de consultation, réparation et entretien.",
+          "url": "https://nlwigs.example.com",
+          "address": {
+            "@type": "PostalAddress",
+            "streetAddress": "123 Rue de la Beauté",
+            "addressLocality": "Paris",
+            "postalCode": "75001",
+            "addressCountry": "FR"
+          },
+          "telephone": "+33123456789",
+          "openingHours": "Mo-Sa 10:00-19:00",
+          "priceRange": "$$$"
+        },
+        {
+          "@type": "Service",
+          "serviceType": "Créations sur Mesure",
+          "provider": { "@type": "BeautySalon", "name": "NL.WIGS" },
+          "description": "Nous concevons des perruques uniques qui correspondent parfaitement à votre style, votre morphologie et vos désirs. Chaque création est une œuvre d'art.",
+          "areaServed": "FR"
+        },
+        {
+          "@type": "Service",
+          "serviceType": "Réparation et Entretien",
+          "provider": { "@type": "BeautySalon", "name": "NL.WIGS" },
+          "description": "Prolongez la vie de vos perruques avec nos services experts de réparation, de coiffage et d'entretien pour une apparence toujours impeccable.",
+          "areaServed": "FR"
+        },
+        {
+          "@type": "Service",
+          "serviceType": "Consultation & Vente",
+          "provider": { "@type": "BeautySalon", "name": "NL.WIGS" },
+          "description": "Réservez une consultation privée pour explorer notre collection, recevoir des conseils d'experts et trouver la perruque de vos rêves.",
+          "areaServed": "FR"
+        },
+        {
+          "@type": "Product",
+          "name": "L'Éclat d'Or",
+          "description": "Une perruque blonde luxuriante aux ondulations douces, confectionnée à la main pour un réalisme et un confort absolus. Parfaite pour un look glamour et ensoleillé.",
+          "brand": { "@type": "Brand", "name": "NL.WIGS" }
+        },
+        {
+          "@type": "Product",
+          "name": "La Flamme Rousse",
+          "description": "Incarnez la passion avec cette perruque rousse vibrante. Sa coupe moderne et sa couleur intense captent la lumière et les regards.",
+          "brand": { "@type": "Brand", "name": "NL.WIGS" }
+        },
+        {
+          "@type": "Product",
+          "name": "Nuit de Jais",
+          "description": "Élégance intemporelle et sophistication définissent cette perruque d'un noir profond. Sa texture soyeuse et son tombé parfait en font un classique indispensable.",
+          "brand": { "@type": "Brand", "name": "NL.WIGS" }
+        },
+        {
+          "@type": "Product",
+          "name": "Terre de Sienne",
+          "description": "La chaleur d'un brun Sienne lumineux. Une coupe versatile aux reflets riches qui apporte profondeur et caractère.",
+          "brand": { "@type": "Brand", "name": "NL.WIGS" }
+        }
+      ]
+    }
+    </script>
+</head>
+  <body>
+    <div id="root"></div>
+    <script src="https://cdn.jsdelivr.net/npm/tsparticles-slim@2.12.0/tsparticles.slim.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-core@4.20.0/dist/tf-core.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-backend-webgl@4.20.0/dist/tf-backend-webgl.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/face_mesh@0.4.1633559619/face_mesh.min.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/face-landmarks-detection@1.0.5/dist/face-landmarks-detection.min.js"></script>
+    <script type="module" src="/index.tsx"></script>
+  </body>
+</html>

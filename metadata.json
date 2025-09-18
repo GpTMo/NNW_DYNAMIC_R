@@ -1,0 +1,7 @@
+{
+  "name": "NL.WIGS",
+  "description": "An elegant and highly interactive web presentation for NL.WIGS, a custom wig boutique. Features a dynamic interface, service showcases, and a virtual try-on experience using the device camera.",
+  "requestFramePermissions": [
+    "camera"
+  ]
+}
